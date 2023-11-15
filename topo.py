@@ -19,5 +19,6 @@ class SSPTopo( Topo ):
  self.addLink( h2, s1 )
  self.addLink( h3, s2 )
  self.addLink( h4, s2 )
- self.addLink( s1, s2 )
+ self.addLink( s1, s3 )
+ self.addLink( s2, s3 )
 topos = { 'ssptopo': ( lambda: SSPTopo() ) }
