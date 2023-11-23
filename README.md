@@ -1,7 +1,7 @@
 # Sterownik Floodlight jako reaktywny firewall przeciwdziałający atakowi typu ARP spoofing
 
 # Topologia
-Topologia składa się z trzech przełączników OpenFlow Open vSwitch (S1, S2 i S3). Przełączniki S1 i S2 są przełącznikami krawędziowymi (edge), a S3 to przełącznik pośredni (core). Przełączniki te są połączone w topologii drzewa. Topologia posiada również 4 hosty (H1, H2, H3 i H4), trzy z nich (H1, H2 i H3) to normalni użytkownicy końcowi (end user), a czwarty (H4) działa jako atakujący (attacker). W tej topologii będzie znajdować się również pojedynczy kontroler OpenFlow. Wszystko zostało stworzone w emulatorze Mininet.
+Topologia składa się z trzech przełączników OpenFlow Open vSwitch (S1, S2 i S3). Przełączniki S2 i S3 są przełącznikami krawędziowymi (edge), a S1 to przełącznik pośredni (core). Przełączniki te są połączone w topologii drzewa. Topologia posiada również 4 hosty (H1, H2, H3 i H4), trzy z nich (H1, H2 i H3) to normalni użytkownicy końcowi (end user), a czwarty (H4) działa jako atakujący (attacker). W tej topologii będzie znajdować się również pojedynczy kontroler OpenFlow. Wszystko zostało stworzone w emulatorze Mininet.
 
 ![arp-spoofing-topology](https://github.com/Jan943/ssp-arp-spoofing/assets/46823541/5f18f75e-74a6-4e1c-a8b4-25a95906412a)
 
