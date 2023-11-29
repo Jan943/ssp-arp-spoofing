@@ -12,17 +12,19 @@ $ sudo mn --custom topo.py --topo ssptopo
 Do generowania ruchu w sieci zostanie wykorzystane narzędzie  iperf, umożliwające symulowanie intensywnego ruchu między serwerem a klientami w celu analizy i pomiaru parametrów sieciowych. 
 
 Parametry uruchomieniowe narzędzia iperf:
--s - uruchamia iperf jako serwer (przyjmujący połączenia przychodzące),
--c $adresIP - uruchamia iperf jako klienta, który łączy się z serwerem o wskazanym adresie IP,
--p $nr_portu - określa numer portu, na którym iperf nasłuchuje / do którego klient się podłącza 
--t $czas - określa czas trwania testu (podawany w sekundach)
--i $interwał - określa interwał, w którym iperf będzie wyświetlał wyniki (podawany w sekundach)
--u - użycie protokołu UDP zamiast TCP
+
+-s - uruchamia iperf jako serwer (przyjmujący połączenia przychodzące),  
+-c $adresIP - uruchamia iperf jako klienta, który łączy się z serwerem o wskazanym adresie IP,  
+-p $nr_portu - określa numer portu, na którym iperf nasłuchuje / do którego klient się podłącza  
+-t $czas - określa czas trwania testu (podawany w sekundach)  
+-i $interwał - określa interwał, w którym iperf będzie wyświetlał wyniki (podawany w sekundach)  
+-u - użycie protokołu UDP zamiast TCP  
 
 Zaawansowane parametry uruchomieniowe narzędzia iperf:
-- P $liczba_wątków - określa liczbę równoczesnych połączeń,
--L $zakres_portow - określa zakres losowych portów do wyboru (od:do)
--B $adres_IP - określa adres IP interfejsu używanego do nawiązywania połączeń.
+
+-P $liczba_wątków - określa liczbę równoczesnych połączeń,  
+-L $zakres_portow - określa zakres losowych portów do wyboru (od:do)  
+-B $adres_IP - określa adres IP interfejsu używanego do nawiązywania połączeń.  
 
  W celu automatyzacji generowania dużej ilości losowego ruchu między hostami w topologii minine zostanie wykorzystany skrypt wykorzystujący narzędzie iperf. Będzie uruchomiony na jednym z hostów w ww. topologii, tak aby każdy z tych hostów jednocześnie wysyłał dane do innego losowo wybranego hosta na losowym porcie symulując zróżnicowany ruch sieciowy. Skrypt będzie uruchomiony na jednym z hostów w tej topologii. 
 
