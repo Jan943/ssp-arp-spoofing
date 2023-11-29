@@ -5,10 +5,13 @@ Topologia składa się z trzech przełączników OpenFlow Open vSwitch (S1, S2 i
 
 ![ssp_arp_topo](https://github.com/Jan943/ssp-arp-spoofing/assets/46823541/f2ac8693-2e20-471a-aa29-7a183860b9b3)
 
+# Uruchomienie:
 Uruchomienie topologii następuje po wydaniu polecenia:
 
 $ sudo mn --custom topo.py --topo ssptopo 
 
+# Generowanie ruchu:
+## iperf
 Do generowania ruchu w sieci zostanie wykorzystane narzędzie  iperf, umożliwające symulowanie intensywnego ruchu między serwerem a klientami w celu analizy i pomiaru parametrów sieciowych. 
 
 Parametry uruchomieniowe narzędzia iperf:
@@ -28,6 +31,19 @@ Zaawansowane parametry uruchomieniowe narzędzia iperf:
 
  W celu automatyzacji generowania dużej ilości losowego ruchu między hostami w topologii minine zostanie wykorzystany skrypt wykorzystujący narzędzie iperf. Będzie uruchomiony na jednym z hostów w ww. topologii, tak aby każdy z tych hostów jednocześnie wysyłał dane do innego losowo wybranego hosta na losowym porcie symulując zróżnicowany ruch sieciowy. Skrypt będzie uruchomiony na jednym z hostów w tej topologii. 
 
+## arpspoof
+
+Do generowania ataku typu ARP spoofing wykorzystany zostanie narzedzie arpspoof pakietu dsniff. Dzięki temu przez nieprawdziwe rozgłoszenia ARP powoduje, ze komputer (ofiara) wysyła do intruza wszystkie pakiety, zamiast do zadanego IP. Działa to tak, ze jest podmieniany adres fizyczny z prawdziwego na adres intruza dla pewnego konkretnego IP.
+
+arpspoof [-i interface] [-c own|host|both] [-t target] [-r] host
+
+Parametry uruchomieniowe narzędzia arpspoof:
+
+-i $interfejs - określa interfejs, na którym ma działać arpspoof,  
+-c własny|hosta|oba - określa, czy atak ma obejmować tylko własny ruch (own), ruch hosta (host), czy oba (both),  
+-t $cel - określa cel ataku,  
+-r - odwraca kierunek ataku (opcjonalne),  
+host - określa host, który ma być podszywany.
 
 # Literatura:
 1.Ahmed M Abdelsalam, Ashraf El-Sisi i Vamshi Reddy,"Mitigating ARP Spoofing Attacks in Software-Defined Networks", ICCTA 2015
