@@ -6,9 +6,13 @@ Topologia składa się z trzech przełączników OpenFlow Open vSwitch (S1, S2 i
 ![ssp_arp_topo](https://github.com/Jan943/ssp-arp-spoofing/assets/46823541/f2ac8693-2e20-471a-aa29-7a183860b9b3)
 
 # Uruchomienie:
-Uruchomienie topologii następuje po wydaniu polecenia:
+Uruchomienie topologii (oraz automatyczne włączenie generatorów ruchu) następuje po wydaniu polecenia:
 
-$ sudo mn --custom topo.py --topo ssptopo 
+$ floodlight > sudo python topo.py 
+
+Działanie generatorów ruchu można zweryfikować za pomocą komendy:
+
+$ mininet > h1 jobs
 
 # Generowanie ruchu:
 ## iperf
@@ -44,6 +48,14 @@ Parametry uruchomieniowe narzędzia arpspoof:
 -t $cel - określa cel ataku,  
 -r - odwraca kierunek ataku (opcjonalne),  
 host - określa host, który ma być podszywany.
+
+Przykładowe użycie arpspoof:
+
+$ mininet > h1 arpspoof -i h1-eth0 -t 10.0.0.2 10.0.0.3
+
+Przykładowy wynik arpspoof:
+
+$ f2:9d:47:78:6b:76 ba:59:2b:25:13:9 0806 42: arp reply 10.0.0.3 is-at 72:4e:b0:f:1d:d6
 
 # Literatura:
 1.Ahmed M Abdelsalam, Ashraf El-Sisi i Vamshi Reddy,"Mitigating ARP Spoofing Attacks in Software-Defined Networks", ICCTA 2015
