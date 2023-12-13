@@ -37,3 +37,6 @@ def main():
                 host.cmd("./generator.sh &")
 
         net.interact()
+
+if __name__ == '__main__':
+        main()
