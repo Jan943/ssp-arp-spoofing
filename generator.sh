@@ -13,10 +13,8 @@ for ((i=0; i<${#HOSTS[@]}; ++i)); do
         index=$((RANDOM % ${#HOSTS[@]}))
     done
 
-    # Losowy port w zakresie od 5000 do 6000
-#    RANDOM_PORT=$((RANDOM % (6000-5000+1) + 5000))
 
-    # Wysłanie danych z hosta o indeksie 'i' do hosta o losowym indeksie 'index' na losowym porcie 'RANDOM_PORT'
+    # Wysłanie danych z hosta o indeksie 'i' do hosta o losowym indeksie 'index' na losowym porcie "SERWER_PORT"
     iperf -c ${HOSTS[$index]} -p $SERWER_PORT -t 3600 -i 5 -P 5 &
 done
 
