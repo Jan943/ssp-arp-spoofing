@@ -5,6 +5,11 @@ Topologia składa się z trzech przełączników OpenFlow Open vSwitch (S1, S2 i
 
 ![ssp_arp_topo](https://github.com/Jan943/ssp-arp-spoofing/assets/46823541/f2ac8693-2e20-471a-aa29-7a183860b9b3)
 
+# Schemat blokowy
+
+![arp-spoofing-flow-chart](https://github.com/Jan943/ssp-arp-spoofing/assets/46823541/b35f5c21-7170-4d24-ba4f-b667fe490639)
+
+
 # Uruchomienie:
 Uruchomienie topologii (oraz automatyczne włączenie generatorów ruchu) następuje po wydaniu polecenia:
 
