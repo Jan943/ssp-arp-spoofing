@@ -7,7 +7,7 @@ Topologia składa się z trzech przełączników OpenFlow Open vSwitch (S1, S2 i
 
 # Schemat blokowy
 
-![arp-spoofing-flow-chart](https://github.com/Jan943/ssp-arp-spoofing/assets/46823541/b35f5c21-7170-4d24-ba4f-b667fe490639)
+![arp_spoofing_flow_chart](https://github.com/Jan943/ssp-arp-spoofing/assets/46823541/eef91cde-3c88-4163-aacb-93fe569f78eb)
 
 
 # Uruchomienie:
