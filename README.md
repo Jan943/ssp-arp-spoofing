@@ -15,13 +15,17 @@ Uruchomienie topologii (oraz automatyczne włączenie generatorów ruchu) nastę
 
 $ floodlight > sudo python topo.py 
 
+lub
+
+$ floodlight > sudo mn --controller=remote,ip=127.0.0.1,port=6653 --custom=topo.py --topo=ssptopo
+
 Działanie generatorów ruchu można zweryfikować za pomocą komendy:
 
 $ mininet > h1 jobs
 
 # Generowanie ruchu:
 ## iperf
-Do generowania ruchu w sieci zostanie wykorzystane narzędzie  iperf, umożliwające symulowanie intensywnego ruchu między serwerem a klientami w celu analizy i pomiaru parametrów sieciowych. 
+Do generowania ruchu w sieci zostanie wykorzystane narzędzie iperf, umożliwające symulowanie intensywnego ruchu między serwerem a klientami w celu analizy i pomiaru parametrów sieciowych. 
 
 Parametry uruchomieniowe narzędzia iperf:
 
@@ -38,7 +42,7 @@ Zaawansowane parametry uruchomieniowe narzędzia iperf:
 -L $zakres_portow - określa zakres losowych portów do wyboru (od:do)  
 -B $adres_IP - określa adres IP interfejsu używanego do nawiązywania połączeń.  
 
- W celu automatyzacji generowania dużej ilości losowego ruchu między hostami w topologii minine zostanie wykorzystany skrypt wykorzystujący narzędzie iperf. Będzie uruchomiony na jednym z hostów w ww. topologii, tak aby każdy z tych hostów jednocześnie wysyłał dane do innego losowo wybranego hosta na losowym porcie symulując zróżnicowany ruch sieciowy. Skrypt będzie uruchomiony na jednym z hostów w tej topologii. 
+ W celu automatyzacji generowania dużej ilości losowego ruchu między hostami w topologii minine zostanie wykorzystany skrypt wykorzystujący narzędzie iperf. Będzie uruchomiony na każdym z hostów w ww. topologii, tak aby każdy z tych hostów jednocześnie wysyłał dane do innego losowo wybranego hosta na losowym porcie symulując zróżnicowany ruch sieciowy. Skrypt będzie uruchomiony na każdym z hostów w tej topologii. 
 
 ## arpspoof
 
@@ -56,11 +60,23 @@ host - określa host, który ma być podszywany.
 
 Przykładowe użycie arpspoof:
 
-$ mininet > h1 arpspoof -i h1-eth0 -t 10.0.0.2 10.0.0.3
+$ mininet > h2 arpspoof -i h2-eth0 -t 10.0.0.3 10.0.0.4
 
 Przykładowy wynik arpspoof:
+$ 82:60:eb:d9:67:2d 8e:50:d3:f7:cd:d2 0806 42: arp reply 10.0.0.4 is-at 82:60:eb:d9:67:2d
+Oznacza, że 82:60:eb:d9:67:2d (H2) atakuje 8e:50:d3:f7:cd:d2 (H3) mówiąc, że adres MAC 10.0.0.4 (H4) to 82:60:eb:d9:67:2d (H2)
 
-$ f2:9d:47:78:6b:76 ba:59:2b:25:13:9 0806 42: arp reply 10.0.0.3 is-at 72:4e:b0:f:1d:d6
+Standardowy wygląd tablicy ARP H3:
+mininet> h3 arp -a
+? (10.0.0.4) at aa:96:d4:47:dd:c4 [ether] on h3-eth0
+? (10.0.0.1) at 52:e5:0a:4b:c0:52 [ether] on h3-eth0
+? (10.0.0.2) at 82:60:eb:d9:67:2d [ether] on h3-eth0
+
+Wygląd tej samej tablicy po poprawnie przeprowadzonym ataku to:
+mininet> h3 arp -a
+? (10.0.0.4) at 82:60:eb:d9:67:2d [ether] on h3-eth0
+? (10.0.0.1) at 52:e5:0a:4b:c0:52 [ether] on h3-eth0
+? (10.0.0.2) at 82:60:eb:d9:67:2d [ether] on h3-eth0
 
 # Literatura:
 1.Ahmed M Abdelsalam, Ashraf El-Sisi i Vamshi Reddy,"Mitigating ARP Spoofing Attacks in Software-Defined Networks", ICCTA 2015
