@@ -34,6 +34,8 @@ public class SdnLabListener implements IFloodlightModule, IOFMessageListener {
 	
 	public HostsInfo hostsInfo = new HostsInfo();
 	public AntiARPSpoof antiARPSpoof = new AntiARPSpoof();
+	
+	public static boolean fullDebug = false;
 
 	@Override
 	public String getName() {
@@ -67,7 +69,8 @@ public class SdnLabListener implements IFloodlightModule, IOFMessageListener {
 				return Command.STOP;
 			}
 			
-			logger.info("************* NEW PACKET IN *************" + " " + sw.getId() + " on port " + pin.getInPort());
+			if (fullDebug)
+				logger.info("************* NEW PACKET IN *************" + " " + sw.getId() + " on port " + pin.getInPort());
 			
 			DatapathId switchId = sw.getId();
 			

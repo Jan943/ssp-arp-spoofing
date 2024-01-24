@@ -17,14 +17,20 @@ public class AntiARPSpoof {
 	private static final Logger logger = LoggerFactory.getLogger(Flows.class);
 	
 	public static int thresholdPerSecond = 1000;
+	public static boolean enabled = true;
 	
 	private int counterSecond = -1;
 	private int counterValue;
 	
 	public boolean isSpoof(PacketExtractor extractor, HostsInfo hostsInfo) {
 		
+		if (!enabled)
+			return false;
+		
 		if (!extractor.isARP())
 			return false;
+		
+		//logger.info("ARP spoof check!");
 		
 		IPInfo ipInfo = extractor.extractIPInfo();
 		
@@ -40,9 +46,7 @@ public class AntiARPSpoof {
 		}
 		
 		if(!hi.hostMacAddress.equals(extractor.getMACAddress())){
-			logger.info("SPOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOFING!");
-			logger.info("\t" + hi.hostMacAddress + " =/= " + extractor.getMACAddress());
-			logger.info("\tCounter: " + counterValue);
+			logger.info("SPOOF DETECTED! " + hi.hostMacAddress + " =/= " + extractor.getMACAddress());
 			counterValue++;
 			return true;
 		}

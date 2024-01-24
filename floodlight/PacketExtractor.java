@@ -31,77 +31,86 @@ public class PacketExtractor {
 	public PacketExtractor(FloodlightContext cntx, OFMessage msg) {
 		this.cntx = cntx;
 		this.msg = msg;
-		
+
 		// Pobieranie ramki Ethernet z kontekstu
-		eth = IFloodlightProviderService.bcStore.get(cntx, IFloodlightProviderService.CONTEXT_PI_PAYLOAD);
+		eth = IFloodlightProviderService.bcStore.get(cntx,
+				IFloodlightProviderService.CONTEXT_PI_PAYLOAD);
 	}
-	
+
 	public boolean isIPv6() {
 		if (eth.getEtherType() == EthType.IPv6)
 			return true;
 		return false;
 	}
-	
+
 	public boolean isARP() {
 		if (eth.getEtherType() == EthType.ARP)
 			return true;
 		return false;
 	}
-	
-	public MacAddress getMACAddress(){
+
+	public MacAddress getMACAddress() {
 		return eth.getSourceMACAddress();
 	}
 
 	public IPInfo extractIPInfo() {
 
 		// Wyświetlanie informacji o ramce Ethernet
-		logger.info("Frame: src mac {}", eth.getSourceMACAddress());
-		logger.info("Frame: dst mac {}", eth.getDestinationMACAddress());
-		logger.info("Frame: ether_type {}", eth.getEtherType());
+		if (SdnLabListener.fullDebug) {
+			logger.info("Frame: src mac {}", eth.getSourceMACAddress());
+			logger.info("Frame: dst mac {}", eth.getDestinationMACAddress());
+			logger.info("Frame: ether_type {}", eth.getEtherType());
+		}
 
 		// Sprawdzenie typu ether_type
 		if (eth.getEtherType() == EthType.ARP) {
 			// Jeśli to ramka ARP, wyodrębnij informacje
 			arp = (ARP) eth.getPayload();
-			logger.info("ARP: src ip {}", arp.getSenderProtocolAddress());
-			logger.info("ARP: dst ip {}", arp.getTargetProtocolAddress());
-			logger.info("ARP: op code {}", arp.getOpCode());
-			
-			return new IPInfo(arp.getSenderProtocolAddress(), arp.getTargetProtocolAddress());
-			
+			if (SdnLabListener.fullDebug) {
+
+				logger.info("ARP: src ip {}", arp.getSenderProtocolAddress());
+				logger.info("ARP: dst ip {}", arp.getTargetProtocolAddress());
+				logger.info("ARP: op code {}", arp.getOpCode());
+			}
+
+			return new IPInfo(arp.getSenderProtocolAddress(),
+					arp.getTargetProtocolAddress());
+
 		} else if (eth.getEtherType() == EthType.IPv4) {
 			// Jeśli to ramka IPv4, wyodrębnij informacje
 			ipv4 = (IPv4) eth.getPayload();
-			logger.info("IPv4: src ip {}", ipv4.getSourceAddress());
-			logger.info("IPv4: dst ip {}", ipv4.getDestinationAddress());
-			logger.info("IPv4: protocol {}", ipv4.getProtocol());
-			return new IPInfo(ipv4.getSourceAddress(), ipv4.getDestinationAddress());
-			
-			/*
-			if (ipv4.getProtocol() == IpProtocol.TCP) {
-				// Jeśli to ramka TCP, wyodrębnij informacje
-				TCP tcp = (TCP) ipv4.getPayload();
-				logger.info("TCP: src port {}", tcp.getSourcePort());
-				logger.info("TCP: dst port {}", tcp.getDestinationPort());
-			} else if (ipv4.getProtocol() == IpProtocol.UDP) {
-				// Jeśli to ramka UDP, wyodrębnij informacje
-				UDP udp = (UDP) ipv4.getPayload();
-				logger.info("UDP: src port {}", udp.getSourcePort());
-				logger.info("UDP: dst port {}", udp.getDestinationPort());
+			if (SdnLabListener.fullDebug) {
+
+				logger.info("IPv4: src ip {}", ipv4.getSourceAddress());
+				logger.info("IPv4: dst ip {}", ipv4.getDestinationAddress());
+				logger.info("IPv4: protocol {}", ipv4.getProtocol());
 			}
-			*/
+
+			return new IPInfo(ipv4.getSourceAddress(),
+					ipv4.getDestinationAddress());
+
+			/*
+			 * if (ipv4.getProtocol() == IpProtocol.TCP) { // Jeśli to ramka
+			 * TCP, wyodrębnij informacje TCP tcp = (TCP) ipv4.getPayload();
+			 * logger.info("TCP: src port {}", tcp.getSourcePort());
+			 * logger.info("TCP: dst port {}", tcp.getDestinationPort()); } else
+			 * if (ipv4.getProtocol() == IpProtocol.UDP) { // Jeśli to ramka
+			 * UDP, wyodrębnij informacje UDP udp = (UDP) ipv4.getPayload();
+			 * logger.info("UDP: src port {}", udp.getSourcePort());
+			 * logger.info("UDP: dst port {}", udp.getDestinationPort()); }
+			 */
 		}
-		
+
 		return null;
 	}
-	
+
 	class IPInfo {
-		
+
 		public IPInfo(IPv4Address srcIp, IPv4Address dstIp) {
 			this.srcIp = srcIp;
 			this.dstIp = dstIp;
 		}
-		
+
 		public IPv4Address srcIp;
 		public IPv4Address dstIp;
 	}

@@ -71,6 +71,7 @@ public class Flows {
 		
 		sw.write(pob.build());
 		
-		logger.info("Packet forwarded to " + outport);
+		if (SdnLabListener.fullDebug)
+			logger.info("Packet forwarded to " + outport);
 	}
 }
