@@ -1,5 +1,6 @@
 from mininet.topo import Topo
 from mininet.net import Mininet
+from mininet.node import RemoteController
 
 class SSPTopo( Topo ):
  "SSP ARP spoofing topology."
